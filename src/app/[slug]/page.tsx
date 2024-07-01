@@ -10,7 +10,7 @@ import Error from '../../error'
 export default async function page({ params: { slug } }: { params: { slug: string } }) {
     const post: PostType | null = await getPostBySlug(slug)
 
-    if(!post) return <Error error={{message:"Requrested Blog does not exist!", name:'slug_error'}}/>
+    if (!post) return <Error error={{ message: "Requrested Blog does not exist!", name: 'slug_error' }} />
 
     let content = await getContent(post.body)
 
