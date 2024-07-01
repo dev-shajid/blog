@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import '@/app/(client)/globals.css'
+import '@/app/globals.css'
 
 export default function NotFound() {
     return (
