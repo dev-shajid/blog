@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/dialog"
 import { IoIosSearch } from "react-icons/io";
 import { Separator } from "./ui/separator";
-import { getSearch } from "@/lib/api";
-import { useEffect, useState } from "react";
+import { SearchResultType, getSearch } from "@/lib/api";
+import { ChangeEvent, useEffect, useState } from "react";
 import useDebounce from "@/hook/useDebounce";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
@@ -19,18 +19,13 @@ import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 
 export function SearchBar() {
-    const [searchResult, setSearchResult] = useState<{ success: boolean, found: false, tags: TagType[], posts: PostType[] }>({ success: false, found: false, tags: [], posts: [] })
+    const [searchResult, setSearchResult] = useState<SearchResultType>({ success: false, found: false, tags: [], posts: [] })
     const [searchInput, setSearchInput] = useState<string>("")
     const [open, setOpen] = useState<boolean>(false);
     let { debouncedValue, setDebounceInput } = useDebounce()
 
     const handleSearch = async () => {
-        let data: {
-            success: boolean;
-            found: boolean;
-            tags: any;
-            posts: any;
-        } = await getSearch(searchInput)
+        let data = await getSearch(searchInput)
         setSearchResult(data)
     }
 
@@ -39,7 +34,7 @@ export function SearchBar() {
         setSearchInput("")
     }
 
-    const handleChange = async (e) => {
+    const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
         let val = e.target.value
         if (!val.trim()) reset()
         setSearchInput(val)

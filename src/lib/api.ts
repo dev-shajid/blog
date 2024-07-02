@@ -84,7 +84,7 @@ export async function getTags() {
         "count":count(*[_type=='post' && references("tags", ^._id)])
         }
         `
-        // "count":count(*[_type=='post' && references("tags"), ^._id])
+  // "count":count(*[_type=='post' && references("tags"), ^._id])
   const data: TagType[] = await client.fetch(query, {},
     {
       next: {
@@ -133,10 +133,19 @@ export async function getSearch(slug: string) {
         revalidate: 1 // look for updates to revalidate cache every hour
       }
     })
-  return {
+
+  const res: SearchResultType = {
     success: slug.length != 0 ? true : false,
     found: data.length != 0 ? true : false,
     tags: data.filter((e: TagType) => e._type == 'tag'),
     posts: data.filter((e: PostType) => e._type == 'post'),
   }
+  return res
+}
+
+export type SearchResultType = {
+  success: boolean
+  found: boolean
+  tags: TagType[]
+  posts: PostType[]
 }
