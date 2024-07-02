@@ -2,6 +2,7 @@ import { getPostsByTag, getTag } from '@/lib/api'
 import React from 'react'
 import Posts from "@/components/Posts";
 import Error from '@/app/(client)/error';
+import { Separator } from '@/components/ui/separator';
 
 export default async function page({ params: { slug } }: { params: { slug: string } }) {
     const tag: TagType | null = await getTag(slug)
@@ -13,6 +14,7 @@ export default async function page({ params: { slug } }: { params: { slug: strin
     return (
         <section className='space-y-6'>
             <div className="title2">#{tag.name} ({posts.length})</div>
+            <Separator />
             <Posts posts={posts} />
         </section>
     )

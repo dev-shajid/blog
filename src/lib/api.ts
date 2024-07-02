@@ -130,7 +130,7 @@ export async function getSearch(slug: string) {
   const data = await client.fetch(query, {},
     {
       next: {
-        revalidate: 1 // look for updates to revalidate cache every hour
+        revalidate: 60 // look for updates to revalidate cache every hour
       }
     })
 

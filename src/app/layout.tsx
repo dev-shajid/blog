@@ -1,4 +1,5 @@
 import "@/app/globals.css"
+import NextTopLoader from 'nextjs-toploader';
 
 export const metadata = {
   title: 'Next.js',
@@ -13,8 +14,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>
+        <NextTopLoader 
+        showSpinner={false}
+        color="#4646d7"
+        />
         {children}
-        </body>
+      </body>
     </html>
   )
 }

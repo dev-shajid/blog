@@ -9,7 +9,7 @@ import { JSXElementConstructor } from 'react'
 
 export async function getContent(rawMDX: string): Promise<ReactElement<any, string | JSXElementConstructor<any>>> {
 
-    const { frontmatter, content } = await compileMDX<{ title: string, date: string, tags: string[], cover: string }>({
+    const { frontmatter, content } = await compileMDX({
         source: rawMDX,
         // components: {
         // Video,
