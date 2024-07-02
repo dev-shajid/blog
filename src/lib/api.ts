@@ -1,8 +1,8 @@
 import { client } from "@/../sanity/lib/client"
 
-export async function getPosts() {
+export async function getPosts({ start, end }: { start: number, end: number }) {
   const query = `
-      *[_type=="post"]{
+      *[_type=="post"] [${start}...${end}]{
         title,
         slug,
         image,
@@ -22,6 +22,21 @@ export async function getPosts() {
     }
   )
   return data
+}
+
+export async function getPostsCount() {
+  const query = `
+      count(*[_type=='post'])
+    `
+  const data = await client.fetch(query, {},
+    {
+      next: {
+        revalidate: 60 // look for updates to revalidate cache every hour
+      }
+    }
+  )
+
+  return Number(data)
 }
 
 export async function getPostBySlug(slug: string) {
@@ -50,9 +65,29 @@ export async function getPostBySlug(slug: string) {
   return data[0]
 }
 
-export async function getPostsByTag(tagId: string) {
+export async function getPostsPerTagCount(tagId: string) {
+  console.log(tagId)
   const query = `
- *[_type=="post" && references("${tagId}")]{
+      count(*[_type=='post' && references("${tagId}")])
+    `
+  const data = await client.fetch(query, {},
+    {
+      next: {
+        revalidate: 60 // look for updates to revalidate cache every hour
+      }
+    }
+  )
+
+  return Number(data)
+}
+
+export async function getPostsByTag(
+  tagId: string,
+  { start, end }: { start: number, end: number }
+) {
+  console.log({ start, end })
+  const query = `
+ *[_type=="post" && references("${tagId}")] [${start}...${end}]{
         title,
         slug,
         image,
