@@ -101,7 +101,7 @@
   }
 
   .prose a:not(h1>a) {
-    color: rgb(82, 82, 249) !important;
+    @apply text-indigo-500 dark:text-indigo-500;
   }
 
   .blog_content {

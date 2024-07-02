@@ -1,7 +1,5 @@
 import { client } from "@/../sanity/lib/client"
 
-export const revalidate = 1000
-
 export async function getPosts() {
   const query = `
       *[_type=="post"]{
@@ -16,7 +14,13 @@ export async function getPosts() {
         publishedAt,
       }
     `
-  const data = await client.fetch(query)
+  const data = await client.fetch(query, {},
+    {
+      next: {
+        revalidate: 60 // look for updates to revalidate cache every hour
+      }
+    }
+  )
   return data
 }
 
@@ -35,7 +39,13 @@ export async function getPostBySlug(slug: string) {
         publishedAt,
         }
     `
-  const data = await client.fetch(query)
+  const data = await client.fetch(query, { slug },
+    {
+      next: {
+        revalidate: 60 // look for updates to revalidate cache every hour
+      }
+    }
+  )
   // console.log({ data })
   return data[0]
 }
@@ -55,7 +65,12 @@ export async function getPostsByTag(tagId: string) {
         publishedAt,
         }
     `
-  const data = await client.fetch(query)
+  const data = await client.fetch(query, {},
+    {
+      next: {
+        revalidate: 60 // look for updates to revalidate cache every hour
+      }
+    })
   // console.log({ data })
   return data
 }
@@ -69,11 +84,16 @@ export async function getTags() {
         "count":count(*[_type=='post' && references("tags), ^._id])
       }
     `
-  const data:TagType[] = await client.fetch(query)
+  const data: TagType[] = await client.fetch(query, {},
+    {
+      next: {
+        revalidate: 60 // look for updates to revalidate cache every hour
+      }
+    })
   return data
 }
 
-export async function getTag(tag:string) {
+export async function getTag(tag: string) {
   const query = `
  *[_type=="tag" && slug.current=='${tag}']{
         _id, 
@@ -81,6 +101,11 @@ export async function getTag(tag:string) {
         name,
       }
     `
-  const data:TagType[] = await client.fetch(query)
+  const data: TagType[] = await client.fetch(query, {},
+    {
+      next: {
+        revalidate: 60 // look for updates to revalidate cache every hour
+      }
+    })
   return data[0]
 }
