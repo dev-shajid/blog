@@ -1,7 +1,7 @@
 import { getPostsByTag, getTag } from '@/lib/api'
 import React from 'react'
 import Posts from "@/components/Posts";
-import Error from '@/app/error';
+import Error from '@/app/(client)/error';
 
 export default async function page({ params: { slug } }: { params: { slug: string } }) {
     const tag: TagType | null = await getTag(slug)

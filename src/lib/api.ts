@@ -77,13 +77,14 @@ export async function getPostsByTag(tagId: string) {
 
 export async function getTags() {
   const query = `
- *[_type=="tag"]{
+      *[_type=="tag"]{
         _id, 
         slug,
         name,
-        "count":count(*[_type=='post' && references("tags), ^._id])
-      }
-    `
+        "count":count(*[_type=='post' && references("tags", ^._id)])
+        }
+        `
+        // "count":count(*[_type=='post' && references("tags"), ^._id])
   const data: TagType[] = await client.fetch(query, {},
     {
       next: {
@@ -108,4 +109,34 @@ export async function getTag(tag: string) {
       }
     })
   return data[0]
+}
+
+export async function getSearch(slug: string) {
+  const query = `
+    *[_type in ['tag', 'post'] && 
+      (
+        title match '${slug}*'
+        || slug.current match '${slug}*'
+        // | order(_createdAt desc)
+      )
+      ]{
+          _type,
+          _createdAt,
+          name,
+          title,
+          slug
+      }
+    `
+  const data = await client.fetch(query, {},
+    {
+      next: {
+        revalidate: 1 // look for updates to revalidate cache every hour
+      }
+    })
+  return {
+    success: slug.length != 0 ? true : false,
+    found: data.length != 0 ? true : false,
+    tags: data.filter((e: TagType) => e._type == 'tag'),
+    posts: data.filter((e: PostType) => e._type == 'post'),
+  }
 }

@@ -1,6 +1,6 @@
 import { getPostBySlug } from '@/lib/api'
 import React from 'react'
-import { urlForImage } from '../../../../sanity/lib/image'
+import { urlForImage } from '../../../../../sanity/lib/image'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'

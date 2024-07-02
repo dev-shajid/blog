@@ -69,6 +69,7 @@
 
 @layer base {
   * {
+    box-sizing: border-box;
     @apply border-border;
   }
 
@@ -109,4 +110,8 @@
     overflow-wrap: break-word;
     @apply md:!text-xl !text-base;
   }
+
+  div[data-state=open] {
+    backdrop-filter: blur(5px);
+}
 }

@@ -1,4 +1,5 @@
 interface PostType {
+    _type?:string
     title: string
     slug: { current: string }
     publishedAt: string
@@ -9,6 +10,7 @@ interface PostType {
 }
 
 interface TagType {
+    _type?:string
     name: string
     slug: { current: string }
     _id: string
