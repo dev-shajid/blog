@@ -102,7 +102,7 @@
   }
 
   .prose a:not(h1>a) {
-    @apply text-indigo-500 dark:text-indigo-500;
+    /* @apply text-indigo-500 dark:text-indigo-500; */
   }
 
   .blog_content {
@@ -113,5 +113,9 @@
 
   div[data-state=open] {
     backdrop-filter: blur(5px);
+  }
 }
-}
+
+  .table_of_content{
+    @apply border border-gray-500;
+  }

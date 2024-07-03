@@ -9,7 +9,7 @@ import { JSXElementConstructor } from 'react'
 
 export async function getContent(rawMDX: string): Promise<ReactElement<any, string | JSXElementConstructor<any>>> {
 
-    const { frontmatter, content } = await compileMDX({
+    const { content } = await compileMDX({
         source: rawMDX,
         // components: {
         // Video,
@@ -34,6 +34,5 @@ export async function getContent(rawMDX: string): Promise<ReactElement<any, stri
             },
         }
     })
-
     return content
 }

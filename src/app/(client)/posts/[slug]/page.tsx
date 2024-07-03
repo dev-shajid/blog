@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
 import { getContent } from '@/lib/posts'
 import Error from '../../error'
+import BlurImage from '@/components/BlurImage'
 
 export default async function page({ params: { slug } }: { params: { slug: string } }) {
     const post: PostType | null = await getPostBySlug(slug)
@@ -14,18 +15,18 @@ export default async function page({ params: { slug } }: { params: { slug: strin
 
     let content = await getContent(post.body)
 
+    console.log(post.body)
+
     return (
         <>
             <section className='space-y-4 w-full'>
-                <div className="max-w-[900px]">
+                <div className="max-w-[900px] mx-auto">
                     <article className='prose space-y-4 max-w-full !w-ful dark:prose-invert'>
-                        <div className="">
-                            <Image
+                        <div className="overflow-hidden rounded-md max-h-fit bg-gray-300 dark:bg-gray-700">
+                            <BlurImage
                                 src={urlForImage(post.image)}
-                                width={300}
-                                height={300}
                                 alt="Banner"
-                                className="w-full object-cover aspect-video rounded-md"
+                                className="w-full"
                             />
                         </div>
 
