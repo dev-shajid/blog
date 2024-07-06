@@ -5,7 +5,7 @@ import { SearchBar } from './SearchBar';
 
 export default function Nav() {
     return (
-        <div className="border-b">
+        <div className="border-b bg-[hsl(var(--background))]">
             <header className="flex container h-14 items-center gap-4 lg:h-[60px] !max-w-[100vw] overflow-hidden">
                 <div className="flex h-14 gap-8 items-center lg:h-[60px]">
                     <Link href="/" className="flex items-center justify-center font-semibold w-[45px] aspect-square rounded-full dark:bg-white bg-black text-white dark:text-black">

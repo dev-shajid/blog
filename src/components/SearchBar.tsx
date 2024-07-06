@@ -25,13 +25,6 @@ export function SearchBar() {
     const [loading, setLoading] = useState<boolean>(false);
     let { debouncedValue, setDebounceInput } = useDebounce()
 
-    const handleSearch = async () => {
-        setLoading(true)
-        let data = await getSearch(searchInput)
-        setSearchResult(data)
-        setLoading(false)
-    }
-
     const reset = () => {
         setSearchResult({ success: false, found: false, tags: [], posts: [] })
         setSearchInput("")
@@ -46,6 +39,12 @@ export function SearchBar() {
     }
 
     useEffect(() => {
+        const handleSearch = async () => {
+            setLoading(true)
+            let data = await getSearch(searchInput)
+            setSearchResult(data)
+            setLoading(false)
+        }
         handleSearch()
     }, [debouncedValue])
 
